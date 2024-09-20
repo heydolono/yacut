@@ -1,5 +1,4 @@
 import random
-import re
 
 from flask import abort, flash, redirect, render_template, request
 
