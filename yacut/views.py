@@ -7,6 +7,7 @@ from .forms import URLMapForm
 from .models import URLMap
 from .constants import PROMPTS, VALID_SHORT_ID
 
+
 def get_unique_short_id():
     ls = list(PROMPTS)
     randprompts = ''.join([random.choice(ls) for x in range(6)])

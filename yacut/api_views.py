@@ -6,12 +6,13 @@ from .models import URLMap
 from .constants import VALID_SHORT_ID
 from .views import get_unique_short_id
 
+
 @app.route('/api/id/<string:short_link>/', methods=['GET'])
 def get_link(short_link):
     original_link = URLMap.query.filter_by(short=short_link).first()
     if original_link is None:
         raise InvalidAPIUsage('Указанный id не найден', 404)
-    return jsonify(dict(url = original_link.original)), 200
+    return jsonify(dict(url=original_link.original)), 200
 
 
 @app.route('/api/id/', methods=['POST'])
