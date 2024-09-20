@@ -1,4 +1,5 @@
 import random
+import re
 
 from flask import abort, flash, redirect, render_template, request
 
@@ -17,11 +18,10 @@ def get_unique_short_id():
 @app.route('/', methods=['GET', 'POST'])
 def index_view():
     form = URLMapForm()
-    randomprompts = get_unique_short_id()
     if form.validate_on_submit():
         custom_id = form.custom_id.data
-        if custom_id == '':
-            custom_id = f'{randomprompts}'
+        if not custom_id:
+            custom_id = get_unique_short_id()
         if not VALID_SHORT_ID.match(custom_id):
             flash('Указано недопустимое имя для короткой ссылки')
             return render_template('index.html', form=form)

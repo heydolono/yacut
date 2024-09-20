@@ -17,9 +17,9 @@ def get_link(short_link):
 
 @app.route('/api/id/', methods=['POST'])
 def add_link():
-    if not request.is_json:
+    data = request.get_json(silent=True)
+    if data is None:
         raise InvalidAPIUsage('Отсутствует тело запроса')
-    data = request.get_json()
     if 'url' not in data:
         raise InvalidAPIUsage('"url" является обязательным полем!')
     if 'custom_id' not in data or not data['custom_id']:
