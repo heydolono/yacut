@@ -1,9 +1,9 @@
-from flask import abort, flash, redirect, render_template, request
+from flask import flash, redirect, render_template, request
 
 from . import app, db
 from .forms import URLMapForm
 from .models import URLMap
-from .constants import PROMPTS, VALID_SHORT_ID
+from .constants import VALID_SHORT_ID
 from .utils import get_unique_short_id
 
 
