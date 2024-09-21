@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from http import HTTPStatus
 
 from . import app, db
 from .error_handlers import InvalidAPIUsage
@@ -11,8 +12,10 @@ from .views import get_unique_short_id
 def get_link(short_link):
     original_link = URLMap.query.filter_by(short=short_link).first()
     if original_link is None:
-        raise InvalidAPIUsage('Указанный id не найден', 404)
-    return jsonify(dict(url=original_link.original)), 200
+        raise InvalidAPIUsage(
+            'Указанный id не найден', HTTPStatus.NOT_FOUND.value
+        )
+    return jsonify(dict(url=original_link.original)), HTTPStatus.OK.value
 
 
 @app.route('/api/id/', methods=['POST'])

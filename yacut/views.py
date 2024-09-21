@@ -1,17 +1,10 @@
-import random
-
 from flask import abort, flash, redirect, render_template, request
 
 from . import app, db
 from .forms import URLMapForm
 from .models import URLMap
 from .constants import PROMPTS, VALID_SHORT_ID
-
-
-def get_unique_short_id():
-    ls = list(PROMPTS)
-    randprompts = ''.join([random.choice(ls) for x in range(6)])
-    return randprompts
+from .utils import get_unique_short_id
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -43,7 +36,5 @@ def index_view():
 
 @app.route('/<string:short_link>')
 def redirect_view(short_link):
-    original_link = URLMap.query.filter_by(short=short_link).first()
-    if original_link is None:
-        abort(404)
+    original_link = URLMap.query.filter_by(short=short_link).first_or_404()
     return redirect(original_link.original)
