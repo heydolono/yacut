@@ -38,4 +38,6 @@ def add_link():
     db.session.add(link)
     db.session.commit()
     short_link = f'{request.host_url}{link.short}'
-    return jsonify({'url': link.original, 'short_link': short_link}), 201
+    return jsonify(
+        {'url': link.original, 'short_link': short_link}
+    ), HTTPStatus.CREATED.value
